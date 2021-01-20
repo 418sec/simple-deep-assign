@@ -59,8 +59,8 @@ function deepAssign(target/*: any*/, source/*: any*/)/*: void*/ {
 
 /**
  * Blacklist certain keys to prevent Prototype Pollution
- * @param {string} key
- * @returns {boolean}
+ * @private
+ * @param {string} key - object key
  */
 function isPrototypePolluted(key/*: any*/)/*: boolean*/ {
   return ['__proto__', 'constructor', 'prototype'].includes(key);
