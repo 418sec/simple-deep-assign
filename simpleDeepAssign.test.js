@@ -146,4 +146,9 @@ test('deepAssignObject', t => {
     d: [ 0, 1, 2 ],
     e: { fn },
   });
+
+  target = {}
+  deepAssignObject(target, JSON.parse('{"__proto__": {"polluted": true}}'));
+  t.deepEqual(target, {});
+  t.is({}.polluted, undefined);
 });

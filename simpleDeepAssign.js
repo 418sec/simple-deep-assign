@@ -35,7 +35,7 @@ function isObject(item/*: any*/)/*: boolean*/ {
  */
 function deepAssignObject(target/*: Object*/, source/*: Object*/)/*: void*/ {
   Object.keys(source).forEach(key => {
-    if (isObject(target[key]) && isObject(source[key])) {
+    if (isObject(target[key]) && isObject(source[key]) && !isPrototypePolluted(key)) {
       deepAssignObject(target[key], source[key]);
       return;
     }
@@ -55,6 +55,15 @@ function deepAssignObject(target/*: Object*/, source/*: Object*/)/*: void*/ {
 function deepAssign(target/*: any*/, source/*: any*/)/*: void*/ {
   if (!isObject(target) || !isObject(source)) return;
   deepAssignObject(target, source);
+}
+
+/**
+ * Blacklist certain keys to prevent Prototype Pollution
+ * @param {string} key
+ * @returns {boolean}
+ */
+function isPrototypePolluted(key/*: any*/)/*: boolean*/ {
+  return ['__proto__', 'constructor', 'prototype'].includes(key);
 }
 
 module.exports = {
